@@ -7,4 +7,12 @@ class Engineer extends Employee {
         super(name, id, email);
         this.git = git;
     }
+    getRole() {
+        return "Engineer";
+    }
+    getGithub() {
+        return this.git;
+    }
 }
+
+module.exports = Engineer;

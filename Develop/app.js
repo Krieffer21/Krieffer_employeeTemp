@@ -10,7 +10,6 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
-
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
@@ -67,7 +66,17 @@ const engineer = [
         type: "input",
         message: "Please enter your engineer's GitHub username.",
         name: "git"
-      }
+      }, 
+      {
+      type: "checkbox",
+      message: "Please enter the next type of team member you would like to add.",
+      name: "position",
+      choices: [
+          "Engineer",
+          "Intern",
+          "I am done creating my team."
+      ]
+    }
 ];
 
 const intern = [
@@ -90,13 +99,48 @@ const intern = [
         type: "input",
         message: "Please enter your intern's school name.",
         name: "school"
-      }
+      },
+      {
+        type: "checkbox",
+        message: "Please enter the next type of team member you would like to add.",
+        name: "position",
+        choices: [
+            "Engineer",
+            "Intern",
+            "I am done creating my team."
+        ]
+    }
 ];
-
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
+
+async function init() {
+    const manData = await inquirer.prompt(manager);
+    let mgr = new Manager(manData.name, manData.num, manData.email, manData.off);
+    let addEmply = manData.position;
+    let teamMbrs =[mgr];
+
+    while (addEmply === "Engineer" || addEmply ==="Intern") {
+       
+        if(addEmply === "Engineer") {
+        const engData = await inquirer.prompt(engineer);
+        let eng = new Engineer(engData.name, engData.num, engData.email, engData.git);
+        teamMbrs.push(eng);
+        addEmply = engData.position;
+       } 
+
+       if (addEmply ==="Intern") {
+        const intData = await inquirer.prompt(intern);
+        let int = new Intern(intData.name, intData.num, intData.email, intData.school);
+        teamMbrs.push(int);
+        addEmply = intData.position;
+       }
+    } 
+    render(teamMbrs);
+ }
+ init(); 
 
 // After you have your html, you're now ready to create an HTML file using the HTML
 // returned from the `render` function. Now write it to a file named `team.html` in the
