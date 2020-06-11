@@ -4,7 +4,7 @@
   This assignment was to build a Node CLI that generates an HTML webpage using employee information entered by the user.
 
 ### Running the App
-  In the gifs below you can see the app runs throught the comands to enter employee information.
+  In the gifs below you can see the app runs throught the commands to enter employee information.
 
 ![gif1](https://github.com/Krieffer21/Krieffer_employeeTemp/blob/master/images/empl1.gif)
 
